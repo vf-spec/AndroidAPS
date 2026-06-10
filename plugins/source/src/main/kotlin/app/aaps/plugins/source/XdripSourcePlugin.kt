@@ -53,7 +53,7 @@ class XdripSourcePlugin @Inject constructor(
     override var sensorBatteryLevel = -1
 
     override fun advancedFilteringSupported(): Boolean = advancedFiltering
-
+// Vojto test branch - build workflow check only
     @VisibleForTesting
     fun detectSource(glucoseValue: GV) {
         advancedFiltering = arrayOf(
