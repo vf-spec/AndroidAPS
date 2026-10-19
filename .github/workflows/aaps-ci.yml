@@ -274,6 +274,13 @@ jobs:
           mv app/build/outputs/apk/${{ env.VARIANT_FLAVOR }}/${{ env.VARIANT_TYPE }}/*.apk aaps-${{ env.VERSION }}${{ env.VERSION_SUFFIX }}.apk
           mv wear/build/outputs/apk/${{ env.VARIANT_FLAVOR }}/${{ env.VARIANT_TYPE }}/*.apk aaps-wear-${{ env.VERSION }}${{ env.VERSION_SUFFIX }}.apk
 
+      - name: Verify APK signing certificate
+        run: |
+          APK_FILE=$(find . -maxdepth 1 -name 'aaps-*.apk' ! -name 'aaps-wear-*' -print -quit)
+          test -n "$APK_FILE"
+          "$ANDROID_HOME/build-tools/$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -1)/apksigner" verify --print-certs "$APK_FILE"
+
+
       - name: Upload APKs to Google Drive
         run: |
           set -e
